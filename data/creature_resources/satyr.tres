@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://ce4jj05ndqeii"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_pr8ve"]
+
+[resource]
+script = ExtResource("1_pr8ve")
+name = "Satyr"
+featured_attribute = 0
+affinity = ""
+base_strength = 2
+base_defense = 4
+base_hitpoints = 2

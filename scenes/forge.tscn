@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://brbdbh006g11o"]
+
+[ext_resource type="Script" path="res://scenes/forge.gd" id="1_kix35"]
+[ext_resource type="PackedScene" uid="uid://ds72n1yn88bn0" path="res://scenes/card_drop_body.tscn" id="1_sdmrn"]
+
+[sub_resource type="Gradient" id="Gradient_wigab"]
+offsets = PackedFloat32Array(0.84375, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.143801, 0.240768, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7ati7"]
+gradient = SubResource("Gradient_wigab")
+width = 128
+height = 85
+
+[node name="Forge" type="Node2D" groups=["forges"]]
+script = ExtResource("1_kix35")
+forge_owner = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, 2.75)
+texture = SubResource("GradientTexture2D_7ati7")
+
+[node name="CardDropBody" parent="." instance=ExtResource("1_sdmrn")]
+position = Vector2(-31, 2)
+
+[node name="CardDropBody2" parent="." instance=ExtResource("1_sdmrn")]
+position = Vector2(31, 2)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, -64)

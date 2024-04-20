@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://uj6pdgubjn8b"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_8cxyo"]
+
+[resource]
+script = ExtResource("1_8cxyo")
+name = "Dryad"
+featured_attribute = 1
+affinity = "Moon"
+base_strength = 2
+base_defense = 2
+base_hitpoints = 4

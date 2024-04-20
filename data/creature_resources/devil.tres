@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://ceti8gskqcsua"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_5m2r2"]
+
+[resource]
+script = ExtResource("1_5m2r2")
+name = "Devil"
+featured_attribute = 0
+affinity = ""
+base_strength = 2
+base_defense = 2
+base_hitpoints = 4

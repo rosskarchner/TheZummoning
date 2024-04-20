@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2ak3uwckb2u5"]
+
+[ext_resource type="Script" path="res://scenes/location.gd" id="1_1v2jw"]
+[ext_resource type="PackedScene" uid="uid://brbdbh006g11o" path="res://scenes/forge.tscn" id="1_23tgg"]
+[ext_resource type="Texture2D" uid="uid://bjyyqosbykgqp" path="res://assets/Grid.png" id="2_0dnun"]
+
+[node name="Location" type="Node2D" groups=["locations"]]
+position = Vector2(0, -246)
+script = ExtResource("1_1v2jw")
+
+[node name="Forge2" parent="." instance=ExtResource("1_23tgg")]
+visible = false
+position = Vector2(0, 48)
+forge_owner = 1
+
+[node name="Position1" type="Marker2D" parent="."]
+position = Vector2(0, 389)
+
+[node name="Position5" type="Marker2D" parent="."]
+position = Vector2(0, 132)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 260)
+texture = ExtResource("2_0dnun")
+
+[node name="Forge" parent="." instance=ExtResource("1_23tgg")]
+position = Vector2(0, 464)
+direction = -1
+
+[node name="EnemySpaceFullDetector" type="RayCast2D" parent="."]
+position = Vector2(0, 84)

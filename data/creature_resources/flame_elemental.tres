@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://bywnmo2eqrovl"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_u86bk"]
+
+[resource]
+script = ExtResource("1_u86bk")
+name = "Flame Elemental"
+featured_attribute = 0
+affinity = ""
+base_strength = 2
+base_defense = 4
+base_hitpoints = 2

@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://d255b0tnavfpu"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_c6kbv"]
+[ext_resource type="PackedScene" uid="uid://d2ak3uwckb2u5" path="res://scenes/location.tscn" id="1_urhsb"]
+[ext_resource type="Texture2D" uid="uid://ce5avdapa8hxt" path="res://assets/36928565572_0ae6ec755f_o.jpg" id="2_bq7de"]
+[ext_resource type="PackedScene" uid="uid://cda3t5kcor38o" path="res://scenes/deck.tscn" id="3_axsmt"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_gvvuy"]
+[ext_resource type="PackedScene" uid="uid://stdkhda8gbdj" path="res://scenes/player_hand.tscn" id="4_ye5au"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_clxmh"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="6_231r3"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_d0quu"]
+[ext_resource type="PackedScene" uid="uid://w6qaf7asws1l" path="res://scenes/adversary.tscn" id="9_l3nls"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtxc3"]
+size = Vector2(561.5, 72)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_c6kbv")
+
+[node name="SpookyForest" type="Sprite2D" parent="."]
+modulate = Color(0.219608, 0.529412, 0.301961, 1)
+position = Vector2(642.5, 357.5)
+scale = Vector2(0.673437, 0.675)
+texture = ExtResource("2_bq7de")
+
+[node name="PlayerLoseArea" type="Area2D" parent="."]
+position = Vector2(119, 375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerLoseArea"]
+position = Vector2(494.25, 102)
+shape = SubResource("RectangleShape2D_vtxc3")
+
+[node name="Location" parent="." instance=ExtResource("1_urhsb")]
+position = Vector2(373, 18)
+
+[node name="Location2" parent="." instance=ExtResource("1_urhsb")]
+position = Vector2(623, 18)
+
+[node name="Location3" parent="." instance=ExtResource("1_urhsb")]
+position = Vector2(873, 18)
+
+[node name="PlayerHand" parent="." instance=ExtResource("4_ye5au")]
+position = Vector2(364, 638)
+
+[node name="Deck" parent="." instance=ExtResource("3_axsmt")]
+position = Vector2(62, 638)
+
+[node name="EndTurnControls" type="Node2D" parent="."]
+position = Vector2(925, 518)
+
+[node name="EndTurnLabel" type="Label" parent="EndTurnControls"]
+offset_left = 8.0
+offset_top = 31.0
+offset_right = 178.0
+offset_bottom = 54.0
+text = "Play zero to two cards"
+
+[node name="EndTurnButton" type="Button" parent="EndTurnControls"]
+offset_left = 15.0
+offset_top = 63.0
+offset_right = 94.0
+offset_bottom = 94.0
+text = "End Turn"
+
+[node name="PlayerWinArea" type="Area2D" parent="."]
+position = Vector2(127, -24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWinArea"]
+position = Vector2(494.25, 102)
+shape = SubResource("RectangleShape2D_vtxc3")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_gvvuy")
+
+[node name="GameState" type="Node" parent="StateChart"]
+script = ExtResource("6_231r3")
+initial_state = NodePath("initial deal")
+
+[node name="initial deal" type="Node" parent="StateChart/GameState"]
+script = ExtResource("5_clxmh")
+
+[node name="setup_complete" type="Node" parent="StateChart/GameState/initial deal"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../Turn")
+
+[node name="Turn" type="Node" parent="StateChart/GameState"]
+script = ExtResource("6_231r3")
+initial_state = NodePath("deal")
+
+[node name="deal" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="deal_complete" type="Node" parent="StateChart/GameState/Turn/deal"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../player choices")
+
+[node name="player choices" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="player_ended_turn" type="Node" parent="StateChart/GameState/Turn/player choices"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../adversary_choices")
+event = &"end_turn_clicked"
+
+[node name="adversary_choices" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="adversary_ends_turn" type="Node" parent="StateChart/GameState/Turn/adversary_choices"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../act_on_choices")
+
+[node name="act_on_choices" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="creatures summoned" type="Node" parent="StateChart/GameState/Turn/act_on_choices"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../advance creatures")
+
+[node name="advance creatures" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="advance complete" type="Node" parent="StateChart/GameState/Turn/advance creatures"]
+script = ExtResource("8_d0quu")
+to = NodePath("../..")
+event = &"complete"
+
+[node name="Adversary" parent="." instance=ExtResource("9_l3nls")]
+
+[node name="BackgroundColorTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[connection signal="body_entered" from="PlayerLoseArea" to="." method="_on_player_lose_area_body_entered"]
+[connection signal="pressed" from="EndTurnControls/EndTurnButton" to="." method="_on_end_turn_button_pressed"]
+[connection signal="body_entered" from="PlayerWinArea" to="." method="_on_player_win_area_body_entered"]
+[connection signal="state_entered" from="StateChart/GameState/initial deal" to="." method="_on_initial_deal_state_entered"]
+[connection signal="state_entered" from="StateChart/GameState/Turn" to="." method="_on_player_turn_state_entered"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/deal" to="." method="deal_next_card"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/player choices" to="." method="_on_choices_state_entered"]
+[connection signal="state_exited" from="StateChart/GameState/Turn/player choices" to="." method="_on_choices_state_exited"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/adversary_choices" to="Adversary" method="place_enemies"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/act_on_choices" to="." method="_on_act_on_choices_state_entered"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/advance creatures" to="." method="_on_advance_creatures_state_entered"]
+[connection signal="timeout" from="BackgroundColorTimer" to="." method="next_color"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds72n1yn88bn0"]
+
+[ext_resource type="Script" path="res://scenes/card_drop_body.gd" id="1_t86oc"]
+
+[sub_resource type="Gradient" id="Gradient_8flhg"]
+colors = PackedColorArray(0.612578, 0.612578, 0.612578, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fayeu"]
+gradient = SubResource("Gradient_8flhg")
+width = 43
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yupq"]
+size = Vector2(43, 64)
+
+[node name="CardDropBody" type="StaticBody2D" groups=["dropable"]]
+position = Vector2(1, 4)
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("1_t86oc")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_fayeu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2yupq")

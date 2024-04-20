@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://stdkhda8gbdj"]
+
+[ext_resource type="Script" path="res://scenes/player_hand.gd" id="1_ctjyp"]
+
+[node name="PlayerHand" type="Node2D"]
+position = Vector2(254, 642)
+script = ExtResource("1_ctjyp")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_order_changed" from="." to="." method="_on_child_order_changed"]

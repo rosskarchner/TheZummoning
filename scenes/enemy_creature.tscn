@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://ccdpma56tipru"]
+
+[ext_resource type="Script" path="res://scenes/creature.gd" id="1_polfb"]
+[ext_resource type="Texture2D" uid="uid://bbhg5lth57gc2" path="res://assets/creature_placeholder.png" id="2_4ep3w"]
+[ext_resource type="Texture2D" uid="uid://bj3ed1bemkpui" path="res://assets/little-sword.png" id="3_ipggj"]
+[ext_resource type="Texture2D" uid="uid://cpoflqc3fe6p7" path="res://assets/little-shield.png" id="4_ttj5k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ln1fw"]
+size = Vector2(64, 64)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mw72b"]
+font_size = 10
+font_color = Color(0.874172, 0.731064, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4uibd"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rp6ld"]
+font_size = 12
+
+[node name="Enemy Creature" type="CharacterBody2D" groups=["adversary", "creatures"]]
+script = ExtResource("1_polfb")
+direction = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ln1fw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -30.0
+offset_top = -31.0
+offset_right = 30.0
+offset_bottom = 30.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+rotation = 3.14159
+scale = Vector2(0.872865, 1)
+texture = ExtResource("2_4ep3w")
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = -112.0
+offset_top = -30.0
+offset_right = -31.0
+offset_bottom = 30.0
+text = "Impressive Greater Dryad"
+label_settings = SubResource("LabelSettings_mw72b")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 64)
+
+[node name="Little-sword" type="Sprite2D" parent="."]
+position = Vector2(-22, -21)
+texture = ExtResource("3_ipggj")
+
+[node name="StrengthLabel" type="Label" parent="."]
+offset_left = -13.0
+offset_top = -33.0
+offset_right = 27.0
+offset_bottom = -10.0
+text = "2/2"
+label_settings = SubResource("LabelSettings_4uibd")
+
+[node name="Little-shield" type="Sprite2D" parent="."]
+position = Vector2(23, -22)
+texture = ExtResource("4_ttj5k")
+
+[node name="HPLabel" type="Label" parent="."]
+modulate = Color(0, 0.611765, 0.517647, 1)
+offset_left = -21.0
+offset_top = 14.0
+offset_right = 21.0
+offset_bottom = 37.0
+text = "HP: 4/4"
+label_settings = SubResource("LabelSettings_rp6ld")
