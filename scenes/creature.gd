@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Creature
 
 @export var direction = -1
 var creature_name:String:
@@ -11,16 +12,28 @@ var hit_points_remaining:int
 var hit_points_starting:int
 var strength:int
 var defense:int
+var is_dead:= false
+var texture:AtlasTexture
+var color:Color
 
 var modifiers = []
+var attack_animation_scene=preload("res://scenes/attack_animation.tscn")
+var damage_placard_scene=preload("res://scenes/damage_placard.tscn")
+var death_placard_scene=preload("res://scenes/death_placard.tscn")
 
 const creature_resources = {
 	"dryad": preload("res://data/creature_resources/dryad.tres"),
 	"nymph":preload("res://data/creature_resources/nymph.tres"),
-	"devil":preload("res://data/creature_resources/devil.tres"),
-	"earth elemental": preload("res://data/creature_resources/earth_elemental.tres"),
-	"flame elemental": preload("res://data/creature_resources/flame_elemental.tres"),
-	"satyr":preload("res://data/creature_resources/satyr.tres")
+	"smoke_elemental":preload("res://data/creature_resources/smoke_elemental.tres"),
+	"earth_elemental": preload("res://data/creature_resources/earth_elemental.tres"),
+	"flame_elemental": preload("res://data/creature_resources/flame_elemental.tres"),
+	"satyr":preload("res://data/creature_resources/satyr.tres"),
+	"xenomorph": preload("res://data/creature_resources/xenomorph.tres"),
+	"reptilian": preload("res://data/creature_resources/reptilian.tres"),
+	"omicronian": preload("res://data/creature_resources/omicronian.tres"),
+	"martian":preload("res://data/creature_resources/martian.tres"),
+	"little_green_man": preload("res://data/creature_resources/little_green_men.tres"),
+	"grays": preload("res://data/creature_resources/gray.tres")
 }
 
 
@@ -33,6 +46,10 @@ func update_display():
 		$HPLabel.modulate = Color.RED
 	else:
 		$HPLabel.modulate = Color.DARK_GREEN
+	if texture:
+		$CreatureSprite.texture = texture
+		if color:
+			$CreatureSprite.modulate = color
 
 func modifier_math(current_value, operation, amount) -> int:
 	if operation == "multiply":
@@ -57,12 +74,13 @@ func populate_from_description():
 	defense = description.base_defense
 	hit_points_remaining=description.base_hitpoints
 	hit_points_starting=description.base_hitpoints
-	
+	color = description.color
+	texture = description.texture
 	update_display()
 
 func load_modifiers_from_card_data(card_data):
 	
-	for i in ["1","2"]:
+	for i in ["1"]:
 		if card_data['ModifyAttribute'+i] != "":
 			var modify_attribute
 			if card_data['ModifyAttribute'+i] == "featured":
@@ -94,7 +112,7 @@ func load_modifiers_from_card_data(card_data):
 	
 
 func populate(base, modifier=null):
-	var resource_name=base.Creates.to_lower()
+	var resource_name=base.Creates.to_lower().replace(" ","_")
 	description = creature_resources[resource_name]
 	populate_from_description()
 	
@@ -102,10 +120,7 @@ func populate(base, modifier=null):
 		load_modifiers_from_card_data(modifier)
 		apply_modifiers()
 	if base and modifier:
-		if base.Affinity == modifier.Name:
-			creature_name = modifier["Affinity Name Modifier"].replace("%", base.Creates)
-		else:
-			creature_name = modifier["Name Modifier"].replace("%", base.Creates)
+		creature_name = modifier["Name Modifier"].replace("%", base.Creates)
 	else:
 		creature_name = base.Creates
 
@@ -144,15 +159,36 @@ func random_creature():
 	populate_from_description()
 
 func attack(adversary):
+	if is_dead:
+		return
 	var effective_strength:float = float(strength) * (float(hit_points_remaining)/float(hit_points_starting))
 	var differential = effective_strength - adversary.defense
 	var damage = clamp(differential,1,100)
+	var animation = attack_animation_scene.instantiate()
+	if direction == 1:
+		animation.rotation_degrees = 180
+		animation.position.y = 28
+		animation.position.x = -22
+	else:
+		animation.position.y = -28
+		animation.position.x = 22
+		
+	add_child(animation)
+	await get_tree().create_timer(1.0).timeout
 	adversary.take_damage(damage)
 	#print(creature_name + " attacks " + adversary.creature_name)
 	
 func take_damage(amount):
 	hit_points_remaining -= amount
+	var damage_placard = damage_placard_scene.instantiate()
+	damage_placard.get_node("Label").text ="-" + str(int(amount))
+	add_child(damage_placard)
 	update_display()
+	await get_tree().create_timer(0.5).timeout
 	if hit_points_remaining < 1:
+		is_dead=true
+		var death_placard = death_placard_scene.instantiate()
+		add_child(death_placard)
+		await get_tree().create_timer(0.5).timeout
 		queue_free()
 	

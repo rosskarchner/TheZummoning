@@ -1,5 +1,7 @@
 extends Node2D
 
+
+
 var cards_played_this_turn = 0:
 	set(newval):
 		cards_played_this_turn = newval
@@ -16,7 +18,6 @@ func _ready():
 
 func deal_some_cards(num=1):
 	for i in range(num):
-		await get_tree().create_timer(0.5).timeout
 		print("dealing...")
 		if not $PlayerHand.is_full:
 			$Deck.deal_next_card_to($PlayerHand)
@@ -25,17 +26,23 @@ func deal_some_cards(num=1):
 			print("hand is full?")
 		
 func deal_next_card():
+	$EndTurnControls.hide()
 	deal_some_cards(2)
+	await get_tree().create_timer(0.5).timeout
+	$StateChart.send_event("deal_complete")
 
 
 func _on_initial_deal_state_entered():
+	$EndTurnControls.hide()
 	deal_some_cards(2)
+	$StateChart.send_event("setup_complete")
 
 
 
 
 func _on_player_turn_state_entered():
 	cards_played_this_turn = 0
+
 
 func configure_turn_ui():
 	if cards_played_this_turn <= 2:
@@ -57,6 +64,9 @@ func _on_choices_state_exited():
 
 func _on_act_on_choices_state_entered():
 	get_tree().call_group("player_forges", "summon")
+	await get_tree().create_timer(0.5).timeout
+	$StateChart.send_event("summoning_complete")
+	
 
 
 func _on_choices_state_entered():
@@ -93,3 +103,9 @@ func next_color():
 		Color.DARK_MAGENTA]
 	var tween = get_tree().create_tween()
 	tween.tween_property($SpookyForest,"modulate", colors.pick_random(),15)
+	
+
+func _on_reset_state_entered():
+	get_tree().call_group("forges","reset")
+	await get_tree().create_timer(0.5).timeout
+	$StateChart.send_event("reset_complete")

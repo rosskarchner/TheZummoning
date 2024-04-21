@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://uj6pdgubjn8b"]
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://uj6pdgubjn8b"]
 
 [ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_8cxyo"]
+[ext_resource type="Texture2D" uid="uid://dkol51wcr622a" path="res://resources/forest_creature_texture.tres" id="2_rebyq"]
 
 [resource]
 script = ExtResource("1_8cxyo")
 name = "Dryad"
+base_hitpoints = 4
 featured_attribute = 1
-affinity = "Moon"
 base_strength = 2
 base_defense = 2
-base_hitpoints = 4
+texture = ExtResource("2_rebyq")
+color = Color(0.87607, 0.381617, 0.223383, 1)

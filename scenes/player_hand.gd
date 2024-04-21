@@ -2,6 +2,8 @@ extends Node2D
 var cards = []
 var is_full = false
 
+
+
 @onready var next_card_location:
 	get:
 		return Vector2(
@@ -18,8 +20,10 @@ func reposition_cards():
 
 
 func _on_child_order_changed():
-	cards=get_children()
-	if get_child_count() >= 6:
+	cards=get_children().filter(func(c):
+		return c.is_in_group("cards")
+		)
+	if get_child_count() >= 7:
 		is_full=true
 	else:
 		is_full = false

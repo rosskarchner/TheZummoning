@@ -1,13 +1,13 @@
-House,Name,Count,Result Type,Creates,Featured Attribute,Affinity,ModifyAttribute1,ModifyOperation1,ModifyAmount1,ModifyAttribute2,ModifyOperation2,ModifyAmount2,Name Modifier,Affinity Name Modifier
-plant,Elm,5,Creature,Dryad,Defense,Moon,,,,,,,,
-plant,Ash,2,Creature,Nymph,Effect,North Star,,,,,,,,
-plant,A Shrubbery,2,Creature,Satyr,Attack,Betelgeuse,,,,,,,,
-elements,lead,5,Creature,Earth Elemental,Defense,Sirius,,,,,,,,
-elements,carbon,5,Creature,Flame Elemental,Effect,Sol,,,,,,,,
-elements,sulfur,2,Creature,Devil,Attack,Mars,,,,,,,,
-celestial,The Moon,2,,,,,strength,add,3,,,,Fierce %,% of the Moon
-celestial,North Star,2,,,,,featured,multiply,2,,,,Expert %,Great Northern %
-celestial,Betelgeuse,1,,,,,featured,multiply,3,featured_opposite,multiply,0.5,% Acolyte,% of Artillery
-celestial,Sirius,2,,,,,defense,multiply,2,,,,Iron %,% Anchorite
-celestial,Sol,1,,,,,hitpoints,add,3,,,,Solar %,Blinding %
-celestial,Mars,1,,,,,hitpoints,multiply ,2,,,,Charged %,Danger %
+House,Name,Count,Result Type,Creates,ModifyAttribute1,ModifyOperation1,ModifyAmount1,Name Modifier
+plant,Elm,5,Creature,Dryad,strength,add,2,% of the Wood
+plant,Ash,2,Creature,Nymph,strength,add,5,% Champion
+plant,A Shrubbery,2,Creature,Satyr,strength,multiply,3,% Protector
+elements,lead,5,Creature,Earth Elemental,defense,add,2,% Defender
+elements,carbon,5,Creature,Flame Elemental,defense,add,4,Fireproof %
+elements,sulfur,2,Creature,Smoke Elemental,defense,multiply ,3,Hellbound %
+celestial,The Moon,2,Creature,Little Green Man,hitpoints,add,2,Fierce %
+celestial,North Star,2,Creature,Grays,hitpoints,add,4,Expert %
+celestial,Betelgeuse,1,Creature,Xenomorph,hitpoints,add,6,% Acolyte
+celestial,Sirius,2,Creature,Reptilian,hitpoints,add,8,Iron %
+celestial,Sol,1,Creature,Omicronian,hitpoints,add,10,Solar %
+celestial,Mars,1,Creature,Martian,hitpoints,multiply ,2,Charged %

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmmwevbu56aw3"]
+
+[ext_resource type="AudioStream" uid="uid://bisbl40ko3t0o" path="res://assets/audio/DarkAmbient - Infiltration Loop.wav" id="1_chb0i"]
+
+[node name="MusicPlayer" type="Node2D"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_chb0i")
+autoplay = true

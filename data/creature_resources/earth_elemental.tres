@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="CreatureDescription" load_steps=2 format=3 uid="uid://cqnb0p2tyfubo"]
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://cqnb0p2tyfubo"]
 
 [ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_x7x4u"]
+[ext_resource type="Texture2D" uid="uid://ch7nrkbecg01i" path="res://resources/elemental.tres" id="2_wredg"]
 
 [resource]
 script = ExtResource("1_x7x4u")
 name = "Earth Elemental"
+base_hitpoints = 2
 featured_attribute = 0
-affinity = ""
 base_strength = 4
 base_defense = 2
-base_hitpoints = 2
+texture = ExtResource("2_wredg")
+color = Color(6.49765e-07, 0.552523, 0.281594, 1)

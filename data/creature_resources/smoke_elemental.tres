@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://ceti8gskqcsua"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_ibmop"]
+[ext_resource type="Texture2D" uid="uid://ch7nrkbecg01i" path="res://resources/elemental.tres" id="2_trjxt"]
+
+[resource]
+script = ExtResource("1_ibmop")
+name = "Smoke Elemental"
+base_hitpoints = 4
+featured_attribute = 0
+base_strength = 2
+base_defense = 2
+texture = ExtResource("2_trjxt")
+color = Color(0.632123, 0.632123, 0.632123, 1)

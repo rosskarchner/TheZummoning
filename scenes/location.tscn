@@ -8,11 +8,6 @@
 position = Vector2(0, -246)
 script = ExtResource("1_1v2jw")
 
-[node name="Forge2" parent="." instance=ExtResource("1_23tgg")]
-visible = false
-position = Vector2(0, 48)
-forge_owner = 1
-
 [node name="Position1" type="Marker2D" parent="."]
 position = Vector2(0, 389)
 

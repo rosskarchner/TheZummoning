@@ -46,7 +46,8 @@ position = Vector2(364, 638)
 position = Vector2(62, 638)
 
 [node name="EndTurnControls" type="Node2D" parent="."]
-position = Vector2(925, 518)
+visible = false
+position = Vector2(986, 578)
 
 [node name="EndTurnLabel" type="Label" parent="EndTurnControls"]
 offset_left = 8.0
@@ -82,10 +83,20 @@ script = ExtResource("5_clxmh")
 [node name="setup_complete" type="Node" parent="StateChart/GameState/initial deal"]
 script = ExtResource("8_d0quu")
 to = NodePath("../../Turn")
+event = &"setup_complete"
 
 [node name="Turn" type="Node" parent="StateChart/GameState"]
 script = ExtResource("6_231r3")
-initial_state = NodePath("deal")
+initial_state = NodePath("reset")
+
+[node name="reset" type="Node" parent="StateChart/GameState/Turn"]
+script = ExtResource("5_clxmh")
+
+[node name="reset_complete" type="Node" parent="StateChart/GameState/Turn/reset"]
+script = ExtResource("8_d0quu")
+to = NodePath("../../deal")
+event = &"reset_complete"
+delay_seconds = 1.0
 
 [node name="deal" type="Node" parent="StateChart/GameState/Turn"]
 script = ExtResource("5_clxmh")
@@ -93,6 +104,7 @@ script = ExtResource("5_clxmh")
 [node name="deal_complete" type="Node" parent="StateChart/GameState/Turn/deal"]
 script = ExtResource("8_d0quu")
 to = NodePath("../../player choices")
+event = &"deal_complete"
 
 [node name="player choices" type="Node" parent="StateChart/GameState/Turn"]
 script = ExtResource("5_clxmh")
@@ -108,6 +120,7 @@ script = ExtResource("5_clxmh")
 [node name="adversary_ends_turn" type="Node" parent="StateChart/GameState/Turn/adversary_choices"]
 script = ExtResource("8_d0quu")
 to = NodePath("../../act_on_choices")
+event = &"adversary_choices_complete"
 
 [node name="act_on_choices" type="Node" parent="StateChart/GameState/Turn"]
 script = ExtResource("5_clxmh")
@@ -115,6 +128,7 @@ script = ExtResource("5_clxmh")
 [node name="creatures summoned" type="Node" parent="StateChart/GameState/Turn/act_on_choices"]
 script = ExtResource("8_d0quu")
 to = NodePath("../../advance creatures")
+event = &"summoning_complete"
 
 [node name="advance creatures" type="Node" parent="StateChart/GameState/Turn"]
 script = ExtResource("5_clxmh")
@@ -130,11 +144,23 @@ event = &"complete"
 wait_time = 15.0
 autostart = true
 
+[node name="InformationLabel" type="Label" parent="."]
+offset_left = 321.0
+offset_top = 532.0
+offset_right = 926.0
+offset_bottom = 555.0
+horizontal_alignment = 1
+
+[node name="InfoLabelHideTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="body_entered" from="PlayerLoseArea" to="." method="_on_player_lose_area_body_entered"]
 [connection signal="pressed" from="EndTurnControls/EndTurnButton" to="." method="_on_end_turn_button_pressed"]
 [connection signal="body_entered" from="PlayerWinArea" to="." method="_on_player_win_area_body_entered"]
 [connection signal="state_entered" from="StateChart/GameState/initial deal" to="." method="_on_initial_deal_state_entered"]
 [connection signal="state_entered" from="StateChart/GameState/Turn" to="." method="_on_player_turn_state_entered"]
+[connection signal="state_entered" from="StateChart/GameState/Turn/reset" to="." method="_on_reset_state_entered"]
 [connection signal="state_entered" from="StateChart/GameState/Turn/deal" to="." method="deal_next_card"]
 [connection signal="state_entered" from="StateChart/GameState/Turn/player choices" to="." method="_on_choices_state_entered"]
 [connection signal="state_exited" from="StateChart/GameState/Turn/player choices" to="." method="_on_choices_state_exited"]
@@ -142,3 +168,4 @@ autostart = true
 [connection signal="state_entered" from="StateChart/GameState/Turn/act_on_choices" to="." method="_on_act_on_choices_state_entered"]
 [connection signal="state_entered" from="StateChart/GameState/Turn/advance creatures" to="." method="_on_advance_creatures_state_entered"]
 [connection signal="timeout" from="BackgroundColorTimer" to="." method="next_color"]
+[connection signal="timeout" from="InfoLabelHideTimer" to="InformationLabel" method="hide"]

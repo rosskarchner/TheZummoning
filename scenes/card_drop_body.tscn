@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds72n1yn88bn0"]
+[gd_scene load_steps=6 format=3 uid="uid://ds72n1yn88bn0"]
 
 [ext_resource type="Script" path="res://scenes/card_drop_body.gd" id="1_t86oc"]
 
@@ -12,7 +12,10 @@ width = 43
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2yupq"]
 size = Vector2(43, 64)
 
-[node name="CardDropBody" type="StaticBody2D" groups=["dropable"]]
+[sub_resource type="LabelSettings" id="LabelSettings_askcu"]
+font_size = 10
+
+[node name="CardDropBody" type="StaticBody2D"]
 position = Vector2(1, 4)
 collision_layer = 32
 collision_mask = 16
@@ -24,3 +27,11 @@ texture = SubResource("GradientTexture2D_fayeu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_2yupq")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -18.0
+offset_top = -5.0
+offset_right = 17.0
+offset_bottom = 18.0
+text = "Create"
+label_settings = SubResource("LabelSettings_askcu")

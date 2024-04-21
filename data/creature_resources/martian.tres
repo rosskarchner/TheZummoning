@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://c17pmn6risuk4"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_y65cf"]
+[ext_resource type="Texture2D" uid="uid://brufsed67rs3l" path="res://resources/alien_texture.tres" id="2_02q86"]
+
+[resource]
+script = ExtResource("1_y65cf")
+name = "Martian"
+base_hitpoints = 6
+featured_attribute = 2
+base_strength = 4
+base_defense = 4
+texture = ExtResource("2_02q86")
+color = Color(0.909804, 0, 0, 1)

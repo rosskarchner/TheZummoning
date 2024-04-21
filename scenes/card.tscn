@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://d6rb73483hdv"]
+[gd_scene load_steps=12 format=3 uid="uid://d6rb73483hdv"]
 
 [ext_resource type="Script" path="res://scenes/card.gd" id="1_hxnsa"]
 [ext_resource type="Texture2D" uid="uid://dlsypbmbas2sw" path="res://assets/card back.png" id="2_a3is7"]
+[ext_resource type="Texture2D" uid="uid://d0t22ao54tdic" path="res://assets/leaf.png" id="3_dsr6t"]
+[ext_resource type="Texture2D" uid="uid://bounkok81xbeh" path="res://assets/Carbon_dioxide_3D_ball.png" id="4_dgom4"]
+[ext_resource type="Texture2D" uid="uid://c3mxbho3kbywc" path="res://assets/celesitial-card.png" id="5_sqdpl"]
 
 [sub_resource type="Animation" id="Animation_foetp"]
 resource_name = "hide"
@@ -105,14 +108,15 @@ size = Vector2(10, 31)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fdu0"]
 size = Vector2(83, 125)
 
-[sub_resource type="LabelSettings" id="LabelSettings_u8dfq"]
-font_size = 8
+[sub_resource type="LabelSettings" id="LabelSettings_87nrr"]
+font_size = 10
 font_color = Color(0, 0, 0, 1)
 
-[node name="Card" type="Node2D"]
+[node name="Card" type="Node2D" groups=["cards"]]
 script = ExtResource("1_hxnsa")
 
 [node name="CardBack" type="Node2D" parent="."]
+visible = false
 
 [node name="CardBack2" type="Sprite2D" parent="CardBack"]
 texture = ExtResource("2_a3is7")
@@ -126,7 +130,8 @@ libraries = {
 collision_layer = 16
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
+[node name="DragAreaCollision" type="CollisionShape2D" parent="DragArea"]
+unique_name_in_owner = true
 position = Vector2(-1, 2.5)
 shape = SubResource("RectangleShape2D_h40nd")
 
@@ -137,7 +142,25 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_4fdu0")
 
 [node name="CardDetails" type="Node2D" parent="."]
+
+[node name="Leaf" type="Sprite2D" parent="CardDetails"]
+unique_name_in_owner = true
 visible = false
+position = Vector2(-1, -12)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_dsr6t")
+
+[node name="CarbonDioxide" type="Sprite2D" parent="CardDetails"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(-1, -15)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("4_dgom4")
+
+[node name="CelestialCard" type="Sprite2D" parent="CardDetails"]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("5_sqdpl")
 
 [node name="Label" type="Label" parent="CardDetails"]
 offset_left = -35.0
@@ -145,7 +168,7 @@ offset_top = 37.0
 offset_right = 40.0
 offset_bottom = 60.0
 text = "Change me"
-label_settings = SubResource("LabelSettings_u8dfq")
+label_settings = SubResource("LabelSettings_87nrr")
 horizontal_alignment = 1
 vertical_alignment = 2
 autowrap_mode = 2

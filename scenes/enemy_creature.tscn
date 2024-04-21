@@ -13,6 +13,7 @@ font_size = 10
 font_color = Color(0.874172, 0.731064, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4uibd"]
+font_size = 14
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rp6ld"]
@@ -31,11 +32,15 @@ offset_top = -31.0
 offset_right = 30.0
 offset_bottom = 30.0
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-1, 0)
+[node name="DirectionSprite" type="Sprite2D" parent="."]
+position = Vector2(16, 0)
 rotation = 3.14159
 scale = Vector2(0.872865, 1)
 texture = ExtResource("2_4ep3w")
+
+[node name="CreatureSprite" type="Sprite2D" parent="."]
+position = Vector2(-14, 0)
+scale = Vector2(1.5, 1.5)
 
 [node name="NameLabel" type="Label" parent="."]
 offset_left = -112.0
@@ -56,10 +61,10 @@ position = Vector2(-22, -21)
 texture = ExtResource("3_ipggj")
 
 [node name="StrengthLabel" type="Label" parent="."]
-offset_left = -13.0
-offset_top = -33.0
-offset_right = 27.0
-offset_bottom = -10.0
+offset_left = -10.0
+offset_top = -31.0
+offset_right = 30.0
+offset_bottom = -8.0
 text = "2/2"
 label_settings = SubResource("LabelSettings_4uibd")
 
@@ -69,9 +74,9 @@ texture = ExtResource("4_ttj5k")
 
 [node name="HPLabel" type="Label" parent="."]
 modulate = Color(0, 0.611765, 0.517647, 1)
-offset_left = -21.0
+offset_left = -23.0
 offset_top = 14.0
-offset_right = 21.0
+offset_right = 19.0
 offset_bottom = 37.0
 text = "HP: 4/4"
 label_settings = SubResource("LabelSettings_rp6ld")

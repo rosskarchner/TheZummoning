@@ -1,12 +1,16 @@
 @tool
 extends Node2D
 
+class_name Card
+
 var draggable = false
 var is_inside_dropable = false
 var body_ref
 var offset: Vector2
 var initialPos: Vector2
 var card_details: Dictionary
+
+var celectial_label_settings = preload("res://resources/celestial_label_settings.tres")
 
 @export var revealed=false:
 	set(newval):
@@ -51,12 +55,21 @@ func handle_reveal():
 
 func populate(dict):
 	card_details = dict
+	if card_details.House == "plant":
+		%Leaf.show()
+	elif card_details.House == "elements":
+		%CarbonDioxide.show()
+	elif card_details.House == "celestial":
+		%CelestialCard.show()
+		$CardDetails/Label.label_settings = celectial_label_settings
+
 	$CardDetails/Label.text=dict.Name
 	
 
 func _process(_delta):
 	if Engine.is_editor_hint():
 		return
+		
 	if draggable and is_in_group("playable"):
 		if Input.is_action_just_pressed("click"):
 			offset = get_global_mouse_position() - global_position
@@ -101,6 +114,7 @@ func _on_click_area_mouse_entered():
 	if is_in_group("playable") and not Dragging.is_dragging:
 		draggable = true
 		scale *= 1.1
+		Dragging.update_infolabel(card_description())
 
 
 
@@ -109,3 +123,29 @@ func _on_click_area_mouse_exited():
 		draggable = false
 		scale = Vector2(1.0,1.0)
 
+func creature_description() -> CreatureDescription:
+	var lookup_name = card_details.Creates.to_lower().replace(" ","_")
+	return Creature.creature_resources[lookup_name]
+
+func stats_string():
+	var description:CreatureDescription = creature_description()
+	var result = "Str:"+str(description.base_strength)
+	result +=  "/Def:" + str(description.base_defense)
+	result +=  "/HP:" + str(description.base_hitpoints)
+	return result
+
+func boost_string():
+	var result=""
+	if card_details.ModifyOperation1 == "add":
+		result+="+"
+	elif card_details.ModifyOperation1 == "multiply":
+		result +="X"
+	result += str(card_details.ModifyAmount1) + " "
+	result += card_details.ModifyAttribute1
+	return result
+
+func card_description():
+	var info_string = "Create a " + card_details.Creates
+	info_string += "("+stats_string()+ ") "
+	info_string+= "or boost another card with "+ boost_string()
+	return info_string

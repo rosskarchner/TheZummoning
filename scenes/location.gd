@@ -20,8 +20,8 @@ func advance_creatures():
 		if friendly_creatures.size() >= i+1:
 			if is_instance_valid(friendly_creatures[i]):
 				friendly_creatures[i].advance_or_attack()
-				await get_tree().create_timer(0.25).timeout
+				await get_tree().create_timer(0.5).timeout
 		if adversary_creatures.size() >= i+1: 
 			if is_instance_valid(adversary_creatures[i]):
 				adversary_creatures[i].advance_or_attack()
-				await get_tree().create_timer(0.25).timeout
+				await get_tree().create_timer(0.5).timeout

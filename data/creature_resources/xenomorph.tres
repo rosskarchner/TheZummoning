@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://d15qb8q6n844m"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_xqpwf"]
+[ext_resource type="Texture2D" uid="uid://brufsed67rs3l" path="res://resources/alien_texture.tres" id="2_yb5sc"]
+
+[resource]
+script = ExtResource("1_xqpwf")
+name = "Xenomorph"
+base_hitpoints = 4
+featured_attribute = 0
+base_strength = 5
+base_defense = 3
+texture = ExtResource("2_yb5sc")
+color = Color(0.979833, 0.869328, 7.70092e-07, 1)

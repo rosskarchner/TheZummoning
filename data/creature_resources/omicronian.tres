@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CreatureDescription" load_steps=3 format=3 uid="uid://bp8wetuqytnf6"]
+
+[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_2pyan"]
+[ext_resource type="Texture2D" uid="uid://brufsed67rs3l" path="res://resources/alien_texture.tres" id="2_axdkq"]
+
+[resource]
+script = ExtResource("1_2pyan")
+name = "Omicronian"
+base_hitpoints = 8
+featured_attribute = 2
+base_strength = 2
+base_defense = 2
+texture = ExtResource("2_axdkq")
+color = Color(0.219627, 0.445709, 1, 1)

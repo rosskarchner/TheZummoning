@@ -23,6 +23,7 @@ ProjectLevelLoader="*res://addons/maaacks_game_template/extras/scenes/Autoloads/
 ProjectMusicController="*res://addons/maaacks_game_template/extras/scenes/Autoloads/ProjectMusicController.tscn"
 ProjectUISoundController="*res://addons/maaacks_game_template/extras/scenes/Autoloads/ProjectUISoundController.tscn"
 Dragging="*res://autoload/dragging.gd"
+MusicPlayer="*res://scenes/music_player.tscn"
 
 [display]
 
