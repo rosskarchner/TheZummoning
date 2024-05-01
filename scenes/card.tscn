@@ -116,7 +116,6 @@ font_color = Color(0, 0, 0, 1)
 script = ExtResource("1_hxnsa")
 
 [node name="CardBack" type="Node2D" parent="."]
-visible = false
 
 [node name="CardBack2" type="Sprite2D" parent="CardBack"]
 texture = ExtResource("2_a3is7")
@@ -142,6 +141,7 @@ position = Vector2(-0.5, -0.5)
 shape = SubResource("RectangleShape2D_4fdu0")
 
 [node name="CardDetails" type="Node2D" parent="."]
+visible = false
 
 [node name="Leaf" type="Sprite2D" parent="CardDetails"]
 unique_name_in_owner = true
