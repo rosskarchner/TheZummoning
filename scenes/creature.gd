@@ -1,5 +1,6 @@
-extends CharacterBody2D
 class_name Creature
+extends CharacterBody2D
+
 
 @export var direction = -1
 var creature_name:String:
@@ -137,12 +138,12 @@ func advance_or_attack():
 		if blocker.is_in_group(my_group):
 			return # can't move or attack
 		elif blocker.is_in_group(opponent_group):
-			attack(blocker)
+			await attack(blocker)
 			raycast.force_raycast_update()
 			if not raycast.is_colliding():
-				advance()
+				await advance()
 	else:
-		advance()
+		await advance()
 		
 func advance():
 	var tween= get_tree().create_tween()
@@ -152,7 +153,7 @@ func advance():
 		Vector2(position.x,position.y + (direction * 64)),
 		.25
 		)
-	await tween.finished
+	return tween.finished
 
 func random_creature():
 	description = creature_resources.values().pick_random()
@@ -174,21 +175,22 @@ func attack(adversary):
 		animation.position.x = 22
 		
 	add_child(animation)
-	await get_tree().create_timer(1.0).timeout
-	adversary.take_damage(damage)
+	
+	await adversary.take_damage(damage, self)
 	#print(creature_name + " attacks " + adversary.creature_name)
 	
-func take_damage(amount):
+func take_damage(amount, attacker):
 	hit_points_remaining -= amount
-	var damage_placard = damage_placard_scene.instantiate()
-	damage_placard.get_node("Label").text ="-" + str(int(amount))
-	add_child(damage_placard)
-	update_display()
-	await get_tree().create_timer(0.5).timeout
 	if hit_points_remaining < 1:
 		is_dead=true
 		var death_placard = death_placard_scene.instantiate()
 		add_child(death_placard)
 		await get_tree().create_timer(0.5).timeout
+		attacker.advance()
 		queue_free()
+	var damage_placard = damage_placard_scene.instantiate()
+	damage_placard.get_node("Label").text ="-" + str(int(amount))
+	add_child(damage_placard)
+	update_display()
+
 	

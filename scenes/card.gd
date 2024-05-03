@@ -1,7 +1,9 @@
 @tool
+class_name Card
+
 extends Node2D
 
-class_name Card
+signal was_revealed
 
 var draggable = false
 var is_inside_dropable = false
@@ -50,6 +52,7 @@ func handle_reveal():
 		return
 	if revealed:
 		$AnimationPlayer.play("reveal")
+		was_revealed.emit()
 	else:
 		$AnimationPlayer.play("hide")
 
