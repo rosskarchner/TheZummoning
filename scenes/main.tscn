@@ -82,7 +82,7 @@ script = ExtResource("5_clxmh")
 
 [node name="setup_complete" type="Node" parent="StateChart/GameState/initial deal"]
 script = ExtResource("8_d0quu")
-to = NodePath("../../Turn")
+to = NodePath("../../Turn/player choices")
 event = &"setup_complete"
 
 [node name="Turn" type="Node" parent="StateChart/GameState"]
@@ -96,7 +96,6 @@ script = ExtResource("5_clxmh")
 script = ExtResource("8_d0quu")
 to = NodePath("../../deal")
 event = &"reset_complete"
-delay_seconds = 1.0
 
 [node name="deal" type="Node" parent="StateChart/GameState/Turn"]
 script = ExtResource("5_clxmh")

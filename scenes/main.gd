@@ -1,7 +1,6 @@
 extends Node2D
 
 
-
 var cards_played_this_turn = 0:
 	set(newval):
 		cards_played_this_turn = newval
@@ -20,21 +19,20 @@ func deal_some_cards(num=1):
 	for i in range(num):
 		print("dealing...")
 		if not $PlayerHand.is_full:
-			$Deck.deal_next_card_to($PlayerHand)
+			await $Deck.deal_next_card_to($PlayerHand)
 			print("dealt!")
 		else:
 			print("hand is full?")
 		
 func deal_next_card():
 	$EndTurnControls.hide()
-	deal_some_cards(2)
-	await get_tree().create_timer(0.5).timeout
+	await deal_some_cards(2)
 	$StateChart.send_event("deal_complete")
 
 
 func _on_initial_deal_state_entered():
 	$EndTurnControls.hide()
-	deal_some_cards(2)
+	await deal_some_cards(4)
 	$StateChart.send_event("setup_complete")
 
 
@@ -79,17 +77,17 @@ func _on_advance_creatures_state_entered():
 	$StateChart.send_event("complete")
 
 
-func _on_player_lose_area_body_entered(body):
+func _on_player_lose_area_body_entered(_body):
 	var msg = post_game_message.instantiate()
 	msg.get_node("%Message").text="Sorry, you've lost this match"
-	msg.position = Vector2(1280/2, 720/2)
+	msg.position = Vector2(640, 360)
 	add_child(msg)
 
 
-func _on_player_win_area_body_entered(body):
+func _on_player_win_area_body_entered(_body):
 	var msg = post_game_message.instantiate()
 	msg.get_node("%Message").text="You've won this match!"
-	msg.position = Vector2(1280/2, 720/2)
+	msg.position = Vector2(640, 360)
 	add_child(msg)
 
 
