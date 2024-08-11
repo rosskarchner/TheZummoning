@@ -14,6 +14,8 @@ var card_details: Dictionary
 
 var celectial_label_settings = preload("res://resources/celestial_label_settings.tres")
 
+
+
 @export var revealed=false:
 	set(newval):
 		revealed = newval
@@ -31,18 +33,19 @@ func _ready():
 func _draw():
 	var outer_rect_size = Vector2(85, 128)
 	var outer_rect_position = (outer_rect_size /2.0) * -1
-	
+
 	var outer_rect = Rect2(
 		outer_rect_position,
 		outer_rect_size
 	)
-	
+
 	var inner_rect_size =  outer_rect_size - Vector2(2,2)
 	var inner_rect_position = (inner_rect_size /2.0) * -1
 	var inner_rect = Rect2(
 		inner_rect_position,
 		inner_rect_size
 	)
+
 	draw_rect(outer_rect, Color.BLACK)
 	draw_rect(inner_rect, Color.WHITE)
 
@@ -98,6 +101,19 @@ func _process(_delta):
 				
 			else:
 				tween.tween_property(self, "global_position", initialPos,0.2).set_ease(Tween.EASE_OUT)
+			
+
+		var global_rect_size = Vector2(85, 128)
+		
+		var outer_rect = Rect2(
+			global_position - (Vector2(85, 128) /2.0),
+			global_rect_size
+		)
+		
+		var mouse_pos = get_global_mouse_position()
+		
+		if outer_rect.has_point(mouse_pos):
+			Dragging.update_infolabel(card_description())
 
 func _on_drag_area_body_entered(body):
 	if body.is_in_group('dropable') and body.drop_available() and not body_ref:
@@ -107,7 +123,7 @@ func _on_drag_area_body_entered(body):
 
 
 func _on_drag_area_body_exited(body):
-	if body.is_in_group('dropable'):
+	if body.is_in_group('dropable') and body.drop_available():
 		is_inside_dropable = false
 		body.modulate = Color(Color.MEDIUM_PURPLE)
 		body_ref= null
@@ -117,7 +133,7 @@ func _on_click_area_mouse_entered():
 	if is_in_group("playable") and not Dragging.is_dragging:
 		draggable = true
 		scale *= 1.1
-		Dragging.update_infolabel(card_description())
+		
 
 
 

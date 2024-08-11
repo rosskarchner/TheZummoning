@@ -57,9 +57,9 @@ position = Vector2(-22, -22)
 texture = ExtResource("3_nj4l1")
 
 [node name="StrengthLabel" type="Label" parent="."]
-offset_left = -13.0
+offset_left = -14.0
 offset_top = -34.0
-offset_right = 27.0
+offset_right = 26.0
 offset_bottom = -11.0
 text = "2/2"
 label_settings = SubResource("LabelSettings_vxrob")
