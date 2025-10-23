@@ -11,4 +11,3 @@ func update_infolabel(text):
 	information_label.text=text
 	information_label.show()
 	timer.start()
-
