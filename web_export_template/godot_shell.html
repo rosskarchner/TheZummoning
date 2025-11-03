@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="author" content="$GODOT_VERSION">
+	<meta name="description" content="$GODOT_PROJECT_NAME">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="$GODOT_PROJECT_NAME">
+	<meta name="apple-mobile-web-app-title" content="$GODOT_PROJECT_NAME">
+	<meta name="theme-color" content="$GODOT_HEAD_BACKGROUND_COLOR">
+	<meta name="msapplication-navbutton-color" content="$GODOT_HEAD_BACKGROUND_COLOR">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="msapplication-starturl" content=".">
+	<meta property="og:site_name" content="$GODOT_PROJECT_NAME">
+	<meta property="og:url" content="$GODOT_URL">
+	<meta property="og:title" content="$GODOT_PROJECT_NAME">
+	<meta property="og:description" content="$GODOT_HEAD_DESCRIPTION">
+	<meta property="og:image" content="$GODOT_HEAD_IMAGE">
+	<meta property="og:type" content="website">
+	<link id="-gd-engine-icon" rel="icon" type="image/png" href="$GODOT_HEAD_ICON" />
+	<link rel="apple-touch-icon" type="image/png" href="$GODOT_HEAD_ICON" />
+	<link rel="manifest" href="$GODOT_PWA_MANIFEST">
+	<title>$GODOT_PROJECT_NAME</title>
+	<style>
+		*:focus {
+			outline: none;
+		}
+
+		body {
+			touch-action: none;
+			font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+			margin: 0;
+			border: 0 none;
+			padding: 0;
+			text-align: center;
+			background-color: $GODOT_BODY_BACKGROUND_COLOR;
+			overflow: hidden;
+		}
+
+		#canvas {
+			display: block;
+			margin: 0;
+			color: white;
+		}
+
+		#canvas:focus {
+			outline: none;
+		}
+
+		.godot {
+			font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+			color: #e0e0e0;
+			background-color: #3b3943;
+			background-image: linear-gradient(to bottom, #403e48, #35333c);
+			border: 1px solid #45434e;
+			box-shadow: 0 0 1px 1px #2f2d35;
+		}
+
+		#status, #status-splash, #status-progress {
+			position: absolute;
+			left: 0;
+			right: 0;
+		}
+
+		#status, #status-splash {
+			top: 0;
+			bottom: 0;
+		}
+
+		#status {
+			background-color: #242424;
+			visibility: hidden;
+		}
+
+		#status-splash {
+			max-height: 100%;
+			max-width: 100%;
+			margin: auto;
+		}
+
+		#status-progress, #status-notice {
+			display: none;
+		}
+
+		#status-progress {
+			background-color: #38363A;
+			border: 1px solid #444246;
+			box-shadow: 0 0 2px 1px #1B1C22;
+			border-radius: 2px;
+			width: 366px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		#status-progress-inner {
+			height: 18px;
+			background-color: #202020;
+			box-shadow: 0 0 2px 1px #1B1C22;
+			border-radius: 2px;
+			margin: 2px;
+		}
+
+		#status-progress-inner .progress-fill {
+			background-color: #4b4b4b;
+			height: 100%;
+			width: 0;
+			border-radius: 2px;
+			transition: width 0.1s linear;
+		}
+
+		#status-indeterminate {
+			height: 42px;
+			visibility: visible;
+			position: relative;
+		}
+
+		#status-indeterminate > div {
+			width: 4.5px;
+			height: 0;
+			background-color: #f0f0f0;
+			position: absolute;
+			left: 50%;
+			margin-left: -2.25px;
+			bottom: 0;
+			visibility: visible;
+			animation: bounce 0.5s ease-in-out infinite alternate;
+		}
+
+		#status-indeterminate > div:nth-child(1) { animation-delay: 0.0s; }
+		#status-indeterminate > div:nth-child(2) { animation-delay: 0.1s; }
+		#status-indeterminate > div:nth-child(3) { animation-delay: 0.2s; }
+		#status-indeterminate > div:nth-child(4) { animation-delay: 0.3s; }
+		#status-indeterminate > div:nth-child(5) { animation-delay: 0.4s; }
+
+		@keyframes bounce {
+			from {
+				height: 0;
+			}
+			to {
+				height: 42px;
+			}
+		}
+
+		#status-notice {
+			margin: 0 100px;
+			padding: 5px;
+			visibility: visible;
+			border-radius: 5px;
+			border: 2px solid #1C1A1E;
+		}
+
+		#status-notice .godot {
+			text-align: left;
+			color: #e0e0e0;
+			font-size: 14px;
+			padding: 10px;
+		}
+	</style>
+$GODOT_HEAD_INCLUDE
+	<script>
+		// Register the service worker for Cross-Origin Isolation
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('coi-serviceworker.js')
+				.then(function(registration) {
+					console.log('Service Worker registered:', registration);
+				})
+				.catch(function(error) {
+					console.log('Service Worker registration failed:', error);
+				});
+		}
+	</script>
+</head>
+<body>
+	<canvas id="canvas">
+		Your browser does not support the canvas tag.
+	</canvas>
+	<div id="status">
+		<img id="status-splash" src="$GODOT_SPLASH" alt="">
+		<div id="status-progress" style="display: none;" oncontextmenu="event.preventDefault();">
+			<div id="status-progress-inner">
+				<div class="progress-fill"></div>
+			</div>
+		</div>
+		<div id="status-indeterminate" style="display: none;" oncontextmenu="event.preventDefault();">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div id="status-notice" class="godot" style="display: none;"></div>
+	</div>
+	<script src="$GODOT_BASENAME.js"></script>
+	<script>
+		const GODOT_CONFIG = $GODOT_CONFIG;
+		const engine = new Engine(GODOT_CONFIG);
+
+		(function () {
+			const statusElement = document.getElementById('status');
+			const statusSplash = document.getElementById('status-splash');
+			const statusProgressOuter = document.getElementById('status-progress');
+			const statusProgressInner = document.querySelector('#status-progress-inner .progress-fill');
+			const statusIndeterminate = document.getElementById('status-indeterminate');
+			const statusNotice = document.getElementById('status-notice');
+
+			let initializing = true;
+			let statusMode = 'hidden';
+
+			function setStatusMode(mode) {
+				if (statusMode === mode || !initializing) {
+					return;
+				}
+				[statusSplash, statusProgressOuter, statusIndeterminate, statusNotice].forEach(elem => {
+					elem.style.display = 'none';
+				});
+				if (mode === 'progress') {
+					statusProgressOuter.style.display = 'block';
+				} else if (mode === 'indeterminate') {
+					statusIndeterminate.style.display = 'block';
+				} else if (mode === 'notice') {
+					statusNotice.style.display = 'block';
+				} else if (mode === 'splash') {
+					statusSplash.style.display = 'block';
+				}
+				statusMode = mode;
+			}
+
+			function setStatusNotice(text) {
+				while (statusNotice.lastChild) {
+					statusNotice.removeChild(statusNotice.lastChild);
+				}
+				const lines = text.split('\n');
+				lines.forEach((line) => {
+					statusNotice.appendChild(document.createTextNode(line));
+					statusNotice.appendChild(document.createElement('br'));
+				});
+			}
+
+			function displayFailureNotice(err) {
+				console.error(err);
+				if (err instanceof Error) {
+					setStatusNotice(err.message);
+				} else if (typeof err === 'string') {
+					setStatusNotice(err);
+				} else {
+					setStatusNotice('An unknown error occurred');
+				}
+				setStatusMode('notice');
+				initializing = false;
+			}
+
+			const missing = Engine.getMissingFeatures({
+				threads: $GODOT_THREADS_ENABLED,
+			});
+
+			if (missing.length !== 0) {
+				if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders']) {
+					if (missing.length !== 1 || missing[0] !== 'cross-origin-isolation') {
+						displayFailureNotice('Error\nThe following features required to run Godot projects on the Web are missing:\n' + missing.join('\n'));
+					} else {
+						setStatusNotice('Startup will be slow, as threads are not available.\nPlease ensure that headers required for the Origin Trial are sent.');
+					}
+				} else {
+					displayFailureNotice('Error\nThe following features required to run Godot projects on the Web are missing:\n' + missing.join('\n'));
+				}
+			} else {
+				setStatusMode('indeterminate');
+				engine.init('$GODOT_BASENAME.wasm').then(() => {
+					engine.preloadFile('$GODOT_BASENAME.pck');
+				}).then(() => {
+					setStatusMode('progress');
+					initializing = false;
+				}).then(() => {
+					setStatusMode('indeterminate');
+					return engine.start({ 'canvas': document.getElementById('canvas') }).then(() => {
+						statusElement.style.display = 'none';
+						initializing = false;
+					});
+				}).catch(displayFailureNotice);
+			}
+		})();
+	</script>
+</body>
+</html>

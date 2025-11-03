@@ -43,6 +43,10 @@ jobs:
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Web" build/web/index.html
 
+      - name: Copy service worker for Cross-Origin Isolation
+        run: |
+          cp web_export_template/coi-serviceworker.js build/web/
+
       - name: Add .nojekyll for GitHub Pages
         run: |
           touch build/web/.nojekyll
