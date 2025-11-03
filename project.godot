@@ -12,7 +12,7 @@ config_version=5
 
 config/name="TheZummoning"
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.5")
 config/icon="res://icon.png"
 
 [autoload]
@@ -33,7 +33,7 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/maaacks_game_template/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/maaacks_game_template/plugin.cfg", "res://addons/mcp_server/plugin.cfg")
 
 [gui]
 

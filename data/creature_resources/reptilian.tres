@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CreatureDescription" load_steps=4 format=3 uid="uid://beq8njbcft1rg"]
 
-[ext_resource type="Script" path="res://classes/creature_resource.gd" id="1_h1j5n"]
+[ext_resource type="Script" uid="uid://tfh7jv4g5kgk" path="res://classes/creature_resource.gd" id="1_h1j5n"]
 [ext_resource type="Texture2D" uid="uid://cvoxqlg1s0oq1" path="res://assets/monochrome.png" id="2_siglb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfwen"]

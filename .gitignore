@@ -21,3 +21,7 @@ Exports/
 # IDE and OS specific
 .idea/
 .DS_Store
+
+# Other
+
+addons/mcp_server
