@@ -2,6 +2,7 @@
 
 ## CRITICAL BUGS
 
+
 ### 1. Loop Invariant Clearing Cards in forge.gd
 - **File**: `scenes/forge.gd`
 - **Lines**: 67-69
