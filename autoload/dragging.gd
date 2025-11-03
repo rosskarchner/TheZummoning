@@ -6,8 +6,12 @@ var timer
 
 func update_infolabel(text):
 	if not information_label:
-		information_label = get_parent().get_node("Main").get_node("InformationLabel")
-		timer = get_parent().get_node("Main").get_node("InfoLabelHideTimer")
-	information_label.text=text
-	information_label.show()
-	timer.start()
+		var main = get_parent().get_node_or_null("Main")
+		if main:
+			information_label = main.get_node_or_null("InformationLabel")
+			timer = main.get_node_or_null("InfoLabelHideTimer")
+	if information_label:
+		information_label.text=text
+		information_label.show()
+	if timer:
+		timer.start()

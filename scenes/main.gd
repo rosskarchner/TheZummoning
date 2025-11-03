@@ -45,7 +45,9 @@ func _on_player_turn_state_entered():
 func configure_turn_ui():
 	if cards_played_this_turn <= 2:
 		$EndTurnControls/EndTurnButton.disabled=false
-	
+	else:
+		$EndTurnControls/EndTurnButton.disabled=true
+
 	if cards_played_this_turn > 1:
 		for forge in player_forges:
 			forge.close()

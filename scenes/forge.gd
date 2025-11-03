@@ -43,30 +43,36 @@ func reset():
 
 func close():
 	$CreatureDropBody.remove_from_group("dropable")
+	$CreatureDropBody.reset_appearance()
 	$EnhancementDropBody.remove_from_group("dropable")
-	
+	$EnhancementDropBody.reset_appearance()
+
 func open():
 	$CreatureDropBody.add_to_group("dropable")
 	#$CardDropBody2.add_to_group("dropable")
-	
+
 func update_dropable():
 	match current_phase:
 		Phase.CLOSED:
 			$CreatureDropBody.remove_from_group("dropable")
+			$CreatureDropBody.reset_appearance()
 			$EnhancementDropBody.remove_from_group("dropable")
+			$EnhancementDropBody.reset_appearance()
 		Phase.OPEN_FOR_CREATURE:
 			$CreatureDropBody.update_label("create")
 			$CreatureDropBody.add_to_group("dropable")
 			$EnhancementDropBody.remove_from_group("dropable")
+			$EnhancementDropBody.reset_appearance()
 		Phase.OPEN_FOR_ENHANCEMENT:
 			$EnhancementDropBody.update_label("boost")
 			$EnhancementDropBody.add_to_group("dropable")
+			$CreatureDropBody.reset_appearance()
 
 func summon():
 	var parent = get_parent()
 	for card in cards_played_here:
 		card.queue_free.call_deferred()
-		cards_played_here = []
+	cards_played_here = []
 	if not creature_details:
 		return
 

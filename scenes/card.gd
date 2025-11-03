@@ -89,7 +89,7 @@ func _process(_delta):
 			modulate.a =1
 			Dragging.is_dragging = false
 			var tween = get_tree().create_tween()
-			if is_inside_dropable:
+			if is_inside_dropable and body_ref:
 				tween.tween_property(self, "global_position", body_ref.global_position,0.2).set_ease(Tween.EASE_OUT)
 				tween.tween_property(self, "scale",Vector2(0.5,0.5),0.2).set_ease(Tween.EASE_OUT)
 				remove_from_group("playable")
@@ -98,7 +98,7 @@ func _process(_delta):
 				body_ref.card_dropped(self)
 				$DragArea.monitoring=false
 				body_ref = null
-				
+
 			else:
 				tween.tween_property(self, "global_position", initialPos,0.2).set_ease(Tween.EASE_OUT)
 			

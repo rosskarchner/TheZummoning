@@ -114,13 +114,16 @@ func load_modifiers_from_card_data(card_data):
 
 func populate(base, modifier=null):
 	var resource_name=base.Creates.to_lower().replace(" ","_")
+	if resource_name not in creature_resources:
+		push_error("Creature not found: " + resource_name)
+		return
 	description = creature_resources[resource_name]
 	populate_from_description()
-	
+
 	if modifier:
 		load_modifiers_from_card_data(modifier)
 		apply_modifiers()
-	if base and modifier:
+	if base and modifier and "Name Modifier" in modifier:
 		creature_name = modifier["Name Modifier"].replace("%", base.Creates)
 	else:
 		creature_name = base.Creates

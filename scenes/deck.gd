@@ -28,6 +28,7 @@ func deal_next_card_to(hand:Node2D):
 	next_card.revealed = true
 	next_card.reparent(hand)
 	next_card.add_to_group("playable")
+	next_card.add_to_group("cards")
 	await tween.finished
 	card_dealt.emit()
 
