@@ -1,4 +1,9 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
+/*
+ * This service worker enables Cross-Origin Isolation for Godot web exports on GitHub Pages.
+ * It injects the required COOP (Cross-Origin-Opener-Policy) and COEP (Cross-Origin-Embedder-Policy)
+ * headers to enable SharedArrayBuffer support, which is necessary for threading in Godot 4.x.
+ */
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
     self.addEventListener("install", () => self.skipWaiting());

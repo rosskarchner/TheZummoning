@@ -163,7 +163,7 @@ $GODOT_HEAD_INCLUDE
 	<script>
 		// Register the service worker for Cross-Origin Isolation
 		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('coi-serviceworker.js')
+			navigator.serviceWorker.register('./coi-serviceworker.js')
 				.then(function(registration) {
 					console.log('Service Worker registered:', registration);
 				})
@@ -261,7 +261,7 @@ $GODOT_HEAD_INCLUDE
 					if (missing.length !== 1 || missing[0] !== 'cross-origin-isolation') {
 						displayFailureNotice('Error\nThe following features required to run Godot projects on the Web are missing:\n' + missing.join('\n'));
 					} else {
-						setStatusNotice('Startup will be slow, as threads are not available.\nPlease ensure that headers required for the Origin Trial are sent.');
+						setStatusNotice('Enabling cross-origin isolation via service worker.\nThe page will reload automatically once the service worker is registered.');
 					}
 				} else {
 					displayFailureNotice('Error\nThe following features required to run Godot projects on the Web are missing:\n' + missing.join('\n'));
