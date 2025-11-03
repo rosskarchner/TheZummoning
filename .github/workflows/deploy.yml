@@ -32,6 +32,10 @@ jobs:
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Web" build/web/index.html
 
+      - name: Add .nojekyll for GitHub Pages
+        run: |
+          touch build/web/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
